@@ -1,0 +1,9 @@
+{
+  "name": "Example dataset (replace this title)",
+  "description": "Replace this text with a public-safe description of the dataset and its research purpose.",
+  "keywords": [
+    "replace-me"
+  ],
+  "role": "derived",
+  "derivedFrom": []
+}
