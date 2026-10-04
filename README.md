@@ -1,6 +1,6 @@
 # Dataset repository template
 
-Use this repository as a starting point for a dataset held in GitHub and discoverable through the CSSH Data Portal. **Replace this README and every example value in `metadata.json` before publishing.** The repository is the source of the data; the portal is a public, metadata-only catalogue.
+Use this repository as a starting point for a dataset held in GitHub and discoverable through a Data Portal. **Replace this README and every example value in `metadata.json` before publishing.** The repository is the source of the data; the portal is a public, metadata-only catalogue.
 
 ## Create a dataset repository
 
@@ -12,11 +12,9 @@ Use this repository as a starting point for a dataset held in GitHub and discove
 
 ## How cataloguing works
 
-`metadata.json` contains the three descriptive fields the CSSH portal's GitHub harvester reads: `name` (human title, at most 160 characters), `description` (at most 500 characters), and `keywords` (1–20 subject terms, at most 80 characters each). The validator rejects unrecognised fields and URLs in these values. Optional `role` is `"master"` or `"derived"`; `derivedFrom` is an array of confirmed catalogue parent references, independent of role. For example, use `"derivedFrom": [{ "namespace": "publisher", "slug": "source-pages" }]` **only if** that parent record exists in the portal's `datasets.json`. Multiple parents are allowed. Keep `[]` or omit the field if the parent is not known; the local validator checks syntax and duplicates, while the portal checks referenced records and cycles. It does **not** validate dataset files. Existing repositories using `datapackage.json` remain supported; when both exist, `metadata.json` takes precedence for descriptive fields and missing fields fall back to `datapackage.json`. `role` and `derivedFrom` are read only from `metadata.json`.
+`metadata.json` contains the three descriptive fields the data portal's GitHub harvester reads: `name` (human title, at most 160 characters), `description` (at most 500 characters), and `keywords` (1–20 subject terms, at most 80 characters each). The validator rejects unrecognised fields and URLs in these values. Optional `role` is `"master"` or `"derived"`; `derivedFrom` is an array of confirmed catalogue parent references, independent of role. For example, use `"derivedFrom": [{ "namespace": "publisher", "slug": "source-pages" }]` **only if** that parent record exists in the portal's `datasets.json`. Multiple parents are allowed. Keep `[]` or omit the field if the parent is not known; the local validator checks syntax and duplicates, while the portal checks referenced records and cycles. It does **not** validate dataset files. Existing repositories using `datapackage.json` remain supported; when both exist, `metadata.json` takes precedence for descriptive fields and missing fields fall back to `datapackage.json`. `role` and `derivedFrom` are read only from `metadata.json`.
 
 The harvester derives the catalogue `slug` from the repository name, `namespace` from the publisher/account (unless overridden), and `sources`/`access` from the GitHub repository. It proposes a **draft** entry in the portal's `datasets.json`, including any declared `role` and `derivedFrom`; nothing in this template automatically publishes a record. Applying a draft with unknown parent references fails rather than leaving a broken catalogue. A catalogue maintainer reviews the draft, confirms access and provenance/lineage, and removes its draft flag before publication. Never add private resource URLs, credentials, or restricted bytes to public catalogue metadata. The GitHub Action only checks the local metadata shape; it cannot verify correctness, permissions, or whether a catalogue record exists.
-
-To turn this folder into a GitHub template, create and push a GitHub repository for it, then enable **Settings → General → Template repository**. These GitHub settings and branch protection are not configured by the files alone.
 
 ## Releasing this template or a dataset repository
 
