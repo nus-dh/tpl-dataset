@@ -20,6 +20,8 @@ The harvester derives the catalogue `slug` from the repository name, `namespace`
 
 The copied `release.yml` workflow works in **each repository**, including `nus-dh/tpl-dataset`. After `Validate metadata` succeeds on a push to `main`, Release Please uses Conventional Commits to open or update a version and `CHANGELOG.md` release PR when a bump is warranted. Review that PR and **merge it** to create the version tag and GitHub Release. Ordinary feature merges do not publish immediately; docs/chore-only changes normally do not warrant a bump. Release management ignores PR CI, failed CI, stale results, and tag pushes, avoiding a release-to-CI loop.
 
+A new repository starts at `0.1.0` on its first release. When creating a dataset repository from this template, reset `.release-please-manifest.json` to `{}` and remove any inherited `CHANGELOG.md` before its first release so it does not inherit the template's release version or history.
+
 Use squash merges with Conventional Commit PR titles: `feat(data): add annotated pages` (minor), `fix(data): correct labels` (patch), or `feat(data)!: change the annotation schema` / a `BREAKING CHANGE:` footer (major). Merge commits must follow the convention if not squash-merging. Release Please manages the version and changelog; do not manually edit its generated release files. A release tag records a snapshot; it does **not** update a record's `version` or status in the CSSH portal. A steward must review the catalogue entry separately.
 
 Before enabling releases **in each repository**:
