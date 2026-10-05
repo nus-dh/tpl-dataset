@@ -4,6 +4,8 @@ import { pathToFileURL } from 'node:url';
 
 const packageName = /^[a-z0-9](?:[a-z0-9._-]*[a-z0-9])?$/;
 const resourceName = /^[a-z0-9](?:[a-z0-9._-]*[a-z0-9])?$/;
+const stages = new Set(['stage:master', 'stage:curated', 'stage:annotated']);
+const stageRequirement = 'keywords must contain exactly one of stage:master, stage:curated, or stage:annotated';
 function isObject(value) {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
 }
@@ -63,8 +65,15 @@ export function validateDataPackage(data, root = process.cwd()) {
   if (data.description !== undefined && typeof data.description !== 'string') {
     errors.push('description must be text when provided');
   }
-  if (data.keywords !== undefined && (!Array.isArray(data.keywords) || data.keywords.some((keyword) => typeof keyword !== 'string'))) {
-    errors.push('keywords must be an array of strings when provided');
+  if (data.keywords === undefined) {
+    errors.push(stageRequirement);
+  } else if (!Array.isArray(data.keywords) || data.keywords.some((keyword) => typeof keyword !== 'string')) {
+    errors.push('keywords must be an array of strings');
+  } else {
+    const stageKeywords = data.keywords.filter((keyword) => keyword.startsWith('stage:'));
+    if (stageKeywords.length !== 1 || !stages.has(stageKeywords[0])) {
+      errors.push(stageRequirement);
+    }
   }
   if (data.created !== undefined && !validDateTime(data.created)) {
     errors.push('created must be an RFC 3339 date-time when provided');

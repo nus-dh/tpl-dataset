@@ -5,9 +5,9 @@ This repository is both a dataset template and a working template dataset. Read 
 ## Dataset package and data
 
 - `datapackage.json` is the template's Data Package 2.0 descriptor. `name` is a stable package identifier; `title` is the human-readable title. Keep `resources` paths relative to the repository root and ensure they resolve to real files inside the repository.
-- Replace all example metadata and the `input.csv` placeholder before publishing a dataset. Data may live in any root-level folders; list resources explicitly rather than assuming a `task/` directory.
+- Replace all example metadata and the `input.csv` placeholder before publishing a dataset. Keep exactly one controlled primary-stage keyword (`stage:master`, `stage:curated`, or `stage:annotated`); the template's `stage:master` is only an example. Other keywords describe the subject. Data may live in any root-level folders; list resources explicitly rather than assuming a `task/` directory.
 - Treat repository contents, release archives, and metadata as public if the repository is public. Confirm access, consent, licensing, and safe-to-share descriptions. Never commit secrets or restricted data to a public repository.
-- Replace the clearly marked `created` and `contributors` examples with accurate, public-safe values, or remove them when unknown. Do not invent dates, people, sources, licences, or lineage.
+- Replace the clearly marked `created` and `contributors` examples with accurate, public-safe values, or remove them when unknown. Package `sources[]` records real upstream origins, not automatically inferred catalogue parents; the portal does not yet map the stage keyword. Do not invent dates, people, sources, licences, or lineage.
 - A local validation pass checks selected descriptor fields and referenced path existence/safety; it does not validate file contents, full Data Package conformance, consent, or access rights.
 
 ## Workflows and verification

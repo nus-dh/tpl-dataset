@@ -12,7 +12,7 @@ const validPackage = {
   name: 'example-dataset',
   title: 'Example dataset',
   description: 'A clearly labelled placeholder package.',
-  keywords: ['example'],
+  keywords: ['example', 'stage:master'],
   resources: [{ name: 'input', path: 'input.csv', format: 'csv' }],
 };
 
@@ -98,6 +98,31 @@ test('rejects absolute, traversing, URL, and outside-pointing symlink paths', ()
   } finally {
     rmSync(root, { recursive: true, force: true });
     rmSync(outside, { force: true });
+  }
+});
+
+test('requires exactly one controlled stage keyword while allowing subject keywords', () => {
+  const root = fixture();
+  try {
+    for (const stage of ['master', 'curated', 'annotated']) {
+      assert.deepEqual(validateDataPackage({
+        ...validPackage,
+        keywords: ['example', `stage:${stage}`],
+      }, root), []);
+    }
+    for (const keywords of [
+      undefined,
+      ['example'],
+      ['stage:unknown'],
+      ['stage:Master'],
+      ['stage:master', 'stage:curated'],
+      ['stage:master', 'stage:master'],
+    ]) {
+      const errors = validateDataPackage({ ...validPackage, keywords }, root);
+      assert.ok(errors.some((error) => error.includes('stage')), `expected a stage error for ${keywords}`);
+    }
+  } finally {
+    rmSync(root, { recursive: true, force: true });
   }
 });
 
