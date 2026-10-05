@@ -1,0 +1,29 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "example-dataset",
+  "title": "Example dataset (replace this title)",
+  "description": "Replace this with a public-safe description of the dataset and its purpose.",
+  "keywords": [
+    "replace",
+    "these",
+    "keywords",
+    "stage:master"
+  ],
+  "created": "2000-01-01T00:00:00Z",
+  "contributors": [
+    {
+      "title": "REPLACE WITH CONTRIBUTOR NAME",
+      "roles": [
+        "creator"
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "name": "input",
+      "path": "input.csv",
+      "format": "csv",
+      "title": "Placeholder data (replace this resource)"
+    }
+  ]
+}
