@@ -20,5 +20,5 @@ jobs:
           node-version: "22"
       - name: Test validator
         run: node --test scripts/*.test.mjs
-      - name: Validate metadata.json
-        run: node scripts/validate-metadata.mjs
+      - name: Validate Data Package
+        run: node scripts/validate-datapackage.mjs
