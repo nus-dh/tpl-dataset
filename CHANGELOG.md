@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.0](https://github.com/nus-dh/tpl-dataset/compare/v0.2.0...v0.3.0) (2026-10-06)
+
+
+### Features
+
+* **template:** configure dataset stages outside validator ([7467bfa](https://github.com/nus-dh/tpl-dataset/commit/7467bfa61e4a0e37a0facd75963bb03303834693))
+* **template:** configure dataset stages outside validator ([92d78a1](https://github.com/nus-dh/tpl-dataset/commit/92d78a141c97b2b259370afd2c5f27b3e33c2a1d))
+
 ## [0.2.0](https://github.com/nus-dh/tpl-dataset/compare/v0.1.0...v0.2.0) (2026-10-05)
 
 
