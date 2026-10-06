@@ -1,11 +1,13 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, mkdirSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { validateDataPackage } from './validate-datapackage.mjs';
+
+const stageLabels = JSON.parse(readFileSync(new URL('../stage.config.json', import.meta.url), 'utf8'));
 
 const validPackage = {
   $schema: 'https://datapackage.org/profiles/2.0/datapackage.json',
@@ -104,7 +106,7 @@ test('rejects absolute, traversing, URL, and outside-pointing symlink paths', ()
 test('requires exactly one controlled stage keyword while allowing subject keywords', () => {
   const root = fixture();
   try {
-    for (const stage of ['master', 'curated', 'annotated']) {
+    for (const stage of Object.keys(stageLabels)) {
       assert.deepEqual(validateDataPackage({
         ...validPackage,
         keywords: ['example', `stage:${stage}`],
