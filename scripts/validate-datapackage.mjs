@@ -4,8 +4,15 @@ import { pathToFileURL } from 'node:url';
 
 const packageName = /^[a-z0-9](?:[a-z0-9._-]*[a-z0-9])?$/;
 const resourceName = /^[a-z0-9](?:[a-z0-9._-]*[a-z0-9])?$/;
-const stages = new Set(['stage:master', 'stage:curated', 'stage:annotated']);
-const stageRequirement = 'keywords must contain exactly one of stage:master, stage:curated, or stage:annotated';
+const stageLabels = JSON.parse(readFileSync(new URL('../stage.config.json', import.meta.url), 'utf8'));
+const stageNames = isObject(stageLabels) ? Object.entries(stageLabels) : [];
+if (stageNames.length === 0 || stageNames.some(([name, label]) =>
+  !/^[a-z][a-z0-9-]*$/.test(name) || typeof label !== 'string' || !label.trim()
+)) {
+  throw new Error('Invalid stage.config.json: expected nonempty stage names and labels');
+}
+const stages = new Set(stageNames.map(([name]) => `stage:${name}`));
+const stageRequirement = `keywords must contain exactly one of ${[...stages].join(', ')}`;
 function isObject(value) {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
 }
